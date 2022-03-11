@@ -1,0 +1,87 @@
+---
+title: "Working with the `socialrisk` Package"
+author: "Wyatt P. Bensken"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{socialrisk}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup, include = FALSE}
+
+devtools::load_all(".")
+library(tidyverse)
+
+```
+
+# Introduction
+
+The goal of `socialrisk` is to create an efficient way to identify social risk from administrative health care data using ICD-10 diagnosis codes.
+
+# Load Sample Data
+
+We've created a sample dataset of ICD-10 administrative data which we can load in.
+
+```{r}
+i10_wide
+```
+
+# Preparing the Data
+
+We use the built-in `clean_data()` function to specify the: dataset, patient id, current data format (wide or long), and the prefix of the diagnoses variables.
+
+```{r}
+data <- clean_data(dat = i10_wide,
+                   id = patient_id,
+                   style = "wide",
+                   prefix_dx = "dx")
+```
+
+```{r, echo = FALSE}
+head(data, 10)
+```
+
+# Social Risk
+
+Now, we can run our various social risk functions, with varying taxonomies.
+
+## Centers for Medicare and Medicaid Services (CMS)
+
+```{r}
+cms <- socialrisk(dat = data, id = patient_id, dx = dx, taxonomy = "cms")
+```
+
+```{r, echo = FALSE}
+head(cms, 5)
+```
+
+## Missouri Hospital Association
+
+```{r}
+mha <- socialrisk(dat = data, id = patient_id, dx = dx, taxonomy = "mha")
+```
+
+```{r, echo = FALSE}
+head(mha, 5)
+```
+
+## SIREN - UCSF
+
+```{r}
+siren <- socialrisk(dat = data, id = patient_id, dx = dx, taxonomy = "siren")
+```
+
+```{r, echo = FALSE}
+head(siren, 5)
+```
+
+
