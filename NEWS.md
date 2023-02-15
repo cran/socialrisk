@@ -1,3 +1,7 @@
+# socialrisk 0.5.1
+
+* Updating dependices
+
 # socialrisk 0.5.0 
 
 * First CRAN release

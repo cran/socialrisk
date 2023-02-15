@@ -4,6 +4,9 @@
 # socialrisk
 
 <!-- badges: start -->
+
+[![CRAN_Status_Badge](https://www.r-pkg.org/badges/version/socialrisk)](https://cran.r-project.org/package=socialrisk)
+![CRAN_Download_Counter](http://cranlogs.r-pkg.org/badges/grand-total/socialrisk)
 <!-- badges: end -->
 
 The goal of `socialrisk` is to create an efficient way to identify
@@ -12,7 +15,11 @@ codes.
 
 ## Installation
 
-`socialrisk` is not yet available on CRAN.
+You can install `socialrisk` from CRAN with:
+
+``` r
+install.packages("socialrisk")
+```
 
 The development version of `socialrisk` can be downloaded from
 [GitHub](https://github.com/WYATTBENSKEN/socialrisk) with:

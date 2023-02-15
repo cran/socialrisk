@@ -6,9 +6,7 @@ knitr::opts_chunk$set(
 
 ## ----setup, include = FALSE---------------------------------------------------
 
-devtools::load_all(".")
-library(tidyverse)
-
+library(socialrisk)
 
 ## -----------------------------------------------------------------------------
 i10_wide

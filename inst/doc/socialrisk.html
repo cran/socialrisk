@@ -12,7 +12,7 @@
 
 <meta name="author" content="Wyatt P. Bensken" />
 
-<meta name="date" content="2022-03-09" />
+<meta name="date" content="2023-02-15" />
 
 <title>Working with the socialrisk Package</title>
 
@@ -141,7 +141,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <h1 class="title toc-ignore">Working with the <code>socialrisk</code> Package</h1>
 <h4 class="author">Wyatt P. Bensken</h4>
-<h4 class="date">2022-03-09</h4>
+<h4 class="date">2023-02-15</h4>
 
 
 
@@ -153,20 +153,66 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h1>Load Sample Data</h1>
 <p>We’ve created a sample dataset of ICD-10 administrative data which we can load in.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>i10_wide</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 29 × 11</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    patient_id sex   date_of_serv dx1   dx2   dx3   dx4   dx5   visit_type hcpcs</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    &lt;fct&gt;      &lt;chr&gt; &lt;date&gt;       &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;      &lt;chr&gt;</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  1 1001       male  2020-02-14   E876  Z560  Z6372 Z654  E440  ip         E2201</span></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  2 1001       male  2021-05-15   J189  Z644  A408  I10   G309  ip         E2201</span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  3 1001       male  2021-01-10   I119  Z628  I10   &lt;NA&gt;  &lt;NA&gt;  ot         E2201</span></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  4 1001       male  2021-04-02   G309  K731  Z591  &lt;NA&gt;  &lt;NA&gt;  ot         E2201</span></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  5 1001       male  2021-05-06   E039  I10   J189  &lt;NA&gt;  &lt;NA&gt;  ot         E2201</span></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  6 1001       male  2021-06-04   J189  Z604  F329  &lt;NA&gt;  &lt;NA&gt;  ot         E2201</span></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  7 1001       male  2021-10-01   E0800 G309  I10   &lt;NA&gt;  &lt;NA&gt;  ot         E2201</span></span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  8 1001       male  2021-11-05   I6011 I10   F329  R930  &lt;NA&gt;  ot         E2201</span></span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  9 1001       male  2022-02-01   M546  G309  I10   I6011 &lt;NA&gt;  ot         E2201</span></span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 10 1001       male  2022-03-15   E0800 I10   J189  F329  &lt;NA&gt;  ot         E2201</span></span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # … with 19 more rows, and 1 more variable: icd_version &lt;dbl&gt;</span></span></code></pre></div>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    patient_id    sex date_of_serv    dx1    dx2    dx3    dx4    dx5 visit_type</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1        1001   male   2020-02-14   E876   Z560  Z6372   Z654   E440         ip</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2        1001   male   2021-05-15   J189   Z644   A408    I10   G309         ip</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3        1001   male   2021-01-10   I119   Z628    I10   &lt;NA&gt;   &lt;NA&gt;         ot</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 4        1001   male   2021-04-02   G309   K731   Z591   &lt;NA&gt;   &lt;NA&gt;         ot</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 5        1001   male   2021-05-06   E039    I10   J189   &lt;NA&gt;   &lt;NA&gt;         ot</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 6        1001   male   2021-06-04   J189   Z604   F329   &lt;NA&gt;   &lt;NA&gt;         ot</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 7        1001   male   2021-10-01  E0800   G309    I10   &lt;NA&gt;   &lt;NA&gt;         ot</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 8        1001   male   2021-11-05  I6011    I10   F329   R930   &lt;NA&gt;         ot</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 9        1001   male   2022-02-01   M546   G309    I10  I6011   &lt;NA&gt;         ot</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 10       1001   male   2022-03-15  E0800    I10   J189   F329   &lt;NA&gt;         ot</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 11       1002 female   2020-01-09   G459   Z598   E840   &lt;NA&gt;   &lt;NA&gt;         ip</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 12       1002 female   2020-03-23   E840   Z591   &lt;NA&gt;   &lt;NA&gt;   &lt;NA&gt;         ot</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 13       1002 female   2020-09-07   E119   Z558   &lt;NA&gt;   &lt;NA&gt;   &lt;NA&gt;         ot</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 14       1002 female   2020-12-05   E840   E119   &lt;NA&gt;   &lt;NA&gt;   &lt;NA&gt;         ot</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 15       1002 female   2022-03-25   F419   E119   G459   &lt;NA&gt;   &lt;NA&gt;         ot</span></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 16       1003   male   2020-02-15  F3010  F1910    I10 G40909   R296         ip</span></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 17       1003   male   2020-03-31  F3010   Z562   E109   &lt;NA&gt;   &lt;NA&gt;         ot</span></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 18       1003   male   2020-12-31   K762   R569   Z576   &lt;NA&gt;   &lt;NA&gt;         ot</span></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 19       1003   male   2021-12-22   E109   R569  F1910  F4310   &lt;NA&gt;         ot</span></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 20       1003   male   2021-12-25 G40909  F1910   R569   &lt;NA&gt;   &lt;NA&gt;         ot</span></span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 21       1003   male   2022-08-28   K762   Z564   &lt;NA&gt;   &lt;NA&gt;   &lt;NA&gt;         ot</span></span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 22       1003   male   2022-09-05   E109   K762  F4310   &lt;NA&gt;   &lt;NA&gt;         ot</span></span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 23       1004 female   2021-01-09 C50111  F1020   F330   &lt;NA&gt;   &lt;NA&gt;         ot</span></span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 24       1004 female   2021-04-15 C50111   F330   &lt;NA&gt;   &lt;NA&gt;   &lt;NA&gt;         ot</span></span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 25       1004 female   2021-06-08   F329 C50111  F1020   &lt;NA&gt;   &lt;NA&gt;         ot</span></span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 26       1005 female   2020-01-27  K4000   G839  R1030   R251 G43909         ip</span></span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 27       1005 female   2020-11-13 G43909  K4000   G839   &lt;NA&gt;   &lt;NA&gt;         ot</span></span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 28       1005 female   2021-12-07    J22   G839 G43909   &lt;NA&gt;   &lt;NA&gt;         ot</span></span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 29       1005 female   2021-12-26  B2790    J22   G839   &lt;NA&gt;   &lt;NA&gt;         ot</span></span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    hcpcs icd_version</span></span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1  E2201          10</span></span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2  E2201          10</span></span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3  E2201          10</span></span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 4  E2201          10</span></span>
+<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 5  E2201          10</span></span>
+<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 6  E2201          10</span></span>
+<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 7  E2201          10</span></span>
+<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 8  E2201          10</span></span>
+<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 9  E2201          10</span></span>
+<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 10 E2201          10</span></span>
+<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 11 E0159          10</span></span>
+<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 12 E0159          10</span></span>
+<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 13 E0159          10</span></span>
+<span id="cb1-46"><a href="#cb1-46" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 14 E0159          10</span></span>
+<span id="cb1-47"><a href="#cb1-47" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 15 E0159          10</span></span>
+<span id="cb1-48"><a href="#cb1-48" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 16 E1353          10</span></span>
+<span id="cb1-49"><a href="#cb1-49" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 17 E1353          10</span></span>
+<span id="cb1-50"><a href="#cb1-50" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 18 E1353          10</span></span>
+<span id="cb1-51"><a href="#cb1-51" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 19 E1353          10</span></span>
+<span id="cb1-52"><a href="#cb1-52" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 20 E1353          10</span></span>
+<span id="cb1-53"><a href="#cb1-53" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 21 E1353          10</span></span>
+<span id="cb1-54"><a href="#cb1-54" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 22 E1353          10</span></span>
+<span id="cb1-55"><a href="#cb1-55" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 23 A7047          10</span></span>
+<span id="cb1-56"><a href="#cb1-56" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 24 A7047          10</span></span>
+<span id="cb1-57"><a href="#cb1-57" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 25 A7047          10</span></span>
+<span id="cb1-58"><a href="#cb1-58" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 26 K0669          10</span></span>
+<span id="cb1-59"><a href="#cb1-59" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 27 K0669          10</span></span>
+<span id="cb1-60"><a href="#cb1-60" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 28  &lt;NA&gt;          10</span></span>
+<span id="cb1-61"><a href="#cb1-61" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 29  &lt;NA&gt;          10</span></span></code></pre></div>
 </div>
 <div id="preparing-the-data" class="section level1">
 <h1>Preparing the Data</h1>
